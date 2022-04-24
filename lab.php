@@ -160,13 +160,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="box2">
               <div class="cell">
                 <div class="disp-dataCl">
+                  Lab :- <?php echo $labName; ?>
+                </div>
+                <div class="disp-dataCl">
                   Teacher :- <?php echo $teacherName; ?>
                 </div>
                 <div class="disp-dataCl">
                   Room :- <?php echo $roomNo; ?>
-                </div>
-                <div class="disp-dataCl">
-                  Lab :- <?php echo $labName; ?>
                 </div>
                 <div class="disp-dataCl">
                   <form action="lab.php" method="post">
