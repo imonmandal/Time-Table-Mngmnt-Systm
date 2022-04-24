@@ -1,5 +1,15 @@
-Use php v5
-Password for mysql is nothing->it can be changed in project
+Use php v7
+Password for mysql can be changed in project in "Database\DBController.php" and in "index.php"
 Xampp server was used
+First big project made by me
 
-First big project made by me given by Prof. B D Zope.
+Data can be uploaded from excelsheet to mysql database
+Don't disturb the layout of excel sheets in the data directory
+We have to only handle class time table
+Teacher and room time table will be taken care of
+This project will ensure that there is no clashes
+Maximum number of lectures of teachers will be taken care of
+Data from database can be downloaded in any given location
+Future work:- Automation and signup can be added
+
+This project was made for PICT college
