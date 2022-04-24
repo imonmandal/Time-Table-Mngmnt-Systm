@@ -6,7 +6,7 @@
 }
 
 .time-table {
-  width: 150vw;
+  width: 1920px;
   margin: 1rem;
   background-color: #ffff009c;
   padding: 1rem;
@@ -160,7 +160,7 @@ body {
 }
 
 body header {
-  width: 100vw;
+  width: 1265px;
   height: 2rem;
   text-align: center;
   margin-top: 5px;

@@ -12,12 +12,13 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 425px;
 }
 
 .con {
   background-color: beige;
-  width: 50vw;
-  height: 75vh;
+  width: 650px;
+  height: 100%;
   margin: 15px;
   border: 5px solid gainsboro;
 }
@@ -84,7 +85,7 @@ h1 {
 .btn2 {
   padding: 0 0.5rem;
   border-radius: 0.25rem;
-  margin-top: 6px;
+  margin-bottom: 6px;
 }
 
 .cell {

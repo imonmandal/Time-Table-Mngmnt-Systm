@@ -8,7 +8,6 @@
 
 body {
   background-color: #c0fcfc;
-  min-width: 50vw;
 }
 
 h1 {
@@ -25,7 +24,7 @@ h1 {
 
 .con {
   background-color: beige;
-  min-width: 45vw;
+  width: 560px;
   height: 325px;
   margin: 20px;
   border: 5px solid gainsboro;
