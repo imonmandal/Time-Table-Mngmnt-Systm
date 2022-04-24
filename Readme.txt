@@ -1,7 +1,6 @@
 Use php v7
-Password for mysql can be changed in project in "Database\DBController.php" and in "index.php"
+Change configuration of mysql database in project in "Database\DBController.php" and in "index.php"
 Xampp server was used
-First big project made by me
 
 Data can be uploaded from excelsheet to mysql database
 Don't disturb the layout of excel sheets in the data directory
