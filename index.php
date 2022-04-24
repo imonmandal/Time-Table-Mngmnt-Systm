@@ -95,6 +95,8 @@
     if (isset($_POST['download'])) {
 
       $p = $_POST['path'];
+      $p = str_replace("'", "", $p);
+      $p = str_replace('"', '', $p);
       if (file_exists($p . "\\table_data_download")) {
         echo '<script type="text/javascript">alert("This path already has folder table_data_download pls select another path or delete that folder");</script>';
       } else {

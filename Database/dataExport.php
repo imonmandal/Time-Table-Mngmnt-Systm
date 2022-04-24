@@ -29,6 +29,8 @@ class dataExport
                 if (strlen($d) == 0) {
                     $sheet->setCellValue($col . $row, "-");
                 } else {
+                    $d = str_replace('#', '-', $d);
+                    $d = str_replace('^', ' ', $d);
                     $sheet->setCellValue($col . $row, $d);
                 }
             }
