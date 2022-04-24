@@ -1,5 +1,5 @@
 Use php v7
-Change configuration of mysql database in project in "Database\DBController.php" and in "index.php"
+Change configuration of mysql database in "Database\DBController.php" and in "index.php"
 Xampp server was used
 
 Data can be uploaded from excelsheet to mysql database
