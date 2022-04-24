@@ -8,6 +8,7 @@
 
 body {
   background-color: #c0fcfc;
+  min-width: 50vw;
 }
 
 h1 {
@@ -24,10 +25,16 @@ h1 {
 
 .con {
   background-color: beige;
-  width: 45vw;
-  height: 60vh;
+  min-width: 45vw;
+  height: 325px;
   margin: 20px;
   border: 5px solid gainsboro;
+}
+
+@media only screen and (max-width: 1275px) {
+  .container {
+    flex-direction: column;
+  }
 }
 
 /* ------------------------------------------------------------------- */
@@ -39,7 +46,7 @@ h1 {
   align-items: center;
   width: 100%;
   height: 100%;
-  font-size: 2rem;
+  font-size: 1.75rem;
 }
 
 .fm-ele1 {
@@ -55,18 +62,17 @@ h1 {
 }
 
 .fm-ele1 button {
-  padding: 0.5rem 1rem;
+  padding: 0.25rem 0.5rem;
   margin: 0 1rem;
   border-radius: 0.5rem;
   font-size: 1.25rem;
 }
 
 .fm-ele1 input {
-  width: 20rem;
-  height: 2rem;
+  width: 15rem;
+  height: 1.5rem;
   padding: 0 1rem;
   border-radius: 5px;
-  margin-top: 1rem;
 }
 
 /* ------------------------------------------------------------- */

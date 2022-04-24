@@ -112,7 +112,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-top: 1rem;
+      margin: 1rem;
     }
 
     .btm label {
@@ -136,7 +136,6 @@
 
 <body>
   <h1>Time Table Management System</h1>
-
   <div class="container">
     <div class="con">
       <form action="index.php" method="post" id="form1" enctype="multipart/form-data"></form>
@@ -174,7 +173,7 @@
       <div class="fm-ele2">
         <form action="class.php" method="get">
           <label>
-            Select Class <input list="classes" name="class-data">
+            Class <input list="classes" name="class-data" placeholder="Select Class">
             <datalist id="classes">
               <?php
               $tableC = $tt->getTableData('class');
@@ -191,7 +190,7 @@
       <div class="fm-ele2">
         <form action="teacher.php" method="get">
           <label>
-            Select Teacher <input list="teachers" name="teacher-data">
+            Teacher <input list="teachers" name="teacher-data" placeholder="Select Teacher">
             <datalist id="teachers">
               <?php
               $tableT = $tt->getTableData('teacher');
@@ -208,7 +207,7 @@
       <div class="fm-ele2">
         <form action="room.php" method="get">
           <label>
-            Select Room <input list="rooms" name="room-data">
+            Room <input list="rooms" name="room-data" placeholder="Select Room">
             <datalist id="rooms">
               <?php
               $tableR = $tt->getTableData('room');
