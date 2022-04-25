@@ -140,7 +140,7 @@
           for ($i = 1; $i <= $noLec; $i++) {
       ?>
         <div class="row">
-          <div class="cell"><?php echo $i; ?></div>
+          <div class="cell num"><?php echo $i; ?></div>
           <?php
             foreach ($table as $row) :
           ?>
