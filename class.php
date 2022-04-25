@@ -22,6 +22,14 @@
         exit();
       }
     }
+
+    if (isset($_GET['class-return'])) {
+      $class  = $_GET['class-return'];
+      $L = $_GET['clash-lec'];
+      $dy = $_GET['day'];
+      $s = sprintf('<script type="text/javascript">alert("Class %s is having lecture on %s in lecture number %s");</script>', $class, $dy, $L);
+      echo $s;
+    }
   }
 
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -39,13 +47,13 @@
       $f2 = $tt->doesTableExists($room);
 
       if ($f1 == 0 && $f2 == 1) {
-        $s = sprintf('<script type="text/javascript">alert("Table of teacher %s is not there in database.");</script>', $teacher);
+        $s = sprintf('<script type="text/javascript">alert("Table of teacher %s is not there in database");</script>', $teacher);
         echo $s;
       } elseif ($f1 == 1 && $f2 == 0) {
-        $s = sprintf('<script type="text/javascript">alert("Table of room %s is not there in database.");</script>', $room);
+        $s = sprintf('<script type="text/javascript">alert("Table of room %s is not there in database");</script>', $room);
         echo $s;
       } elseif ($f1 == 0 && $f2 == 0) {
-        $s = sprintf('<script type="text/javascript">alert("Table of teacher %s and room %s are not there in database.");</script>', $teacher, $room);
+        $s = sprintf('<script type="text/javascript">alert("Table of teacher %s and room %s are not there in database");</script>', $teacher, $room);
         echo $s;
       } else {
 
@@ -71,7 +79,7 @@
             $tt->updateTable($room, 'Lecture_No', $lec, $day, $dataR);
             echo '<script type="text/javascript">alert("Data entered successfully");</script>';
           } else {
-            $s = sprintf('<script type="text/javascript">alert("No of lectures of teacher %s exceeded");</script>', $teacher);
+            $s = sprintf('<script type="text/javascript">alert("No of lectures of teacher %s have reached the maximum limit");</script>', $teacher);
             echo $s;
           }
         } elseif ($t == 1 && $r == 0) {
@@ -216,7 +224,8 @@
                         $tableT = $tt->getTableData('teacher');
                         foreach ($tableT as $rowT) :
                           if ($rowT['TeacherName']) {
-                            if ($tt->isCellNull($rowT['TeacherName'], 'Lecture_No', $i, $row['days'])) {
+                            $tt->getData("teacher", "TeacherName", $rowT['TeacherName'], "MaxNoOfLec") ? $mxl = $tt->getData("teacher", "TeacherName", $rowT['TeacherName'], "MaxNoOfLec") : $mxl =  100000;
+                            if ($tt->isCellNull($rowT['TeacherName'], 'Lecture_No', $i, $row['days']) && $tt->noOfLec($rowT['TeacherName']) < $mxl) {
                         ?>
                               <option value="<?php echo $rowT['TeacherName']; ?>">
                           <?php }

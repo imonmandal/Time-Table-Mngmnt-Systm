@@ -16,6 +16,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $lec = $_POST['lec'];
     $day = $_POST['day'];
     $class = $_POST['class'];
+    $L = (int)$lec;
+    if ($L % 2 == 0) {
+      $L = $L - 1;
+    } else {
+      $L = $L + 1;
+    }
+
+    $a = $tt->getData($class, 'Lecture_No', $L, $day);
+    $a = explode('^', $a);
+    if ($a[0] == 'lec') {
+      $url = sprintf("Location: class.php?class-return=%s&clash-lec=%s&day=%s", $class, $L, $day);
+      header($url);
+      exit();
+    }
   }
 
   if (isset($_POST['enter-data'])) {
@@ -44,41 +58,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $t = 0; // teacher don't have another lec
       $r = 0; // room is vacant
 
-      if (!$tt->isCellNull($teacher, 'Lecture_No', $lec, $day)) {
+      if ((!$tt->isCellNull($teacher, 'Lecture_No', $lec, $day)) || (!$tt->isCellNull($teacher, 'Lecture_No', $L, $day))) {
         $t = 1;
       }
-      if (!$tt->isCellNull($room, 'Lecture_No', $lec, $day)) {
+      if ((!$tt->isCellNull($room, 'Lecture_No', $lec, $day)) || (!$tt->isCellNull($room, 'Lecture_No', $L, $day))) {
         $r = 1;
       }
 
       if ($t == 0 && $r == 0) {
-        $dataC = "";
+        $tt->getData("teacher", "TeacherName", $teacher, "MaxNoOfLec") ? $mxl = $tt->getData("teacher", "TeacherName", $teacher, "MaxNoOfLec") : $mxl =  100000;
+        if ($tt->noOfLec($teacher) < $mxl - 1) {
+          $dataC = "";
 
-        $L = (int)$lec;
-        if ($L % 2 == 0) {
-          $L = $L - 1;
+          if ($tt->isCellNull($class, 'Lecture_No', $lec, $day)) {
+            $tt->updateTable($class, 'Lecture_No', $L, $day, "|Lab|");
+
+            $dataC = "lab^" . $teacher . "#" . $room . "#" . $lab;
+          } else {
+            $d = $tt->getData($class, 'Lecture_No', $lec, $day);
+            $dataC = $d . "^" . $teacher . "#" . $room . "#" . $lab;
+          }
+
+          $tt->updateTable($teacher, 'Lecture_No', $L, $day, "|Lab|");
+          $tt->updateTable($room, 'Lecture_No', $L, $day, "|Lab|");
+
+          $dataT = $class . "#" . $room . "#" . $lab;
+          $dataR = $class . "#" . $teacher . "#" . $lab;
+
+          $tt->updateTable($class, 'Lecture_No', $lec, $day, $dataC);
+          $tt->updateTable($teacher, 'Lecture_No', $lec, $day, $dataT);
+          $tt->updateTable($room, 'Lecture_No', $lec, $day, $dataR);
+          echo '<script type="text/javascript">alert("Data entered successfully");</script>';
         } else {
-          $L = $L + 1;
+          $s = sprintf('<script type="text/javascript">alert("No of lectures of teacher %s have reached the maximum limit");</script>', $teacher);
+          echo $s;
         }
-        if ($tt->isCellNull($class, 'Lecture_No', $lec, $day)) {
-          $tt->updateTable($class, 'Lecture_No', $L, $day, "|Lab|");
-
-          $dataC = "lab^" . $teacher . "#" . $room . "#" . $lab;
-        } else {
-          $d = $tt->getData($class, 'Lecture_No', $lec, $day);
-          $dataC = $d . "^" . $teacher . "#" . $room . "#" . $lab;
-        }
-
-        $tt->updateTable($teacher, 'Lecture_No', $L, $day, "|Lab|");
-        $tt->updateTable($room, 'Lecture_No', $L, $day, "|Lab|");
-
-        $dataT = $class . "#" . $room . "#" . $lab;
-        $dataR = $class . "#" . $teacher . "#" . $lab;
-
-        $tt->updateTable($class, 'Lecture_No', $lec, $day, $dataC);
-        $tt->updateTable($teacher, 'Lecture_No', $lec, $day, $dataT);
-        $tt->updateTable($room, 'Lecture_No', $lec, $day, $dataR);
-        echo '<script type="text/javascript">alert("Data entered successfully");</script>';
       } elseif ($t == 1 && $r == 0) {
         $s = sprintf('<script type="text/javascript">alert("%s is having another lecture");</script>', $teacher);
         echo $s;
@@ -195,7 +209,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $tableT = $tt->getTableData('teacher');
                         foreach ($tableT as $rowT) :
                           if ($rowT['TeacherName']) {
-                            if ($tt->isCellNull($rowT['TeacherName'], 'Lecture_No', $lec, $day)) {
+                            $tt->getData("teacher", "TeacherName", $rowT['TeacherName'], "MaxNoOfLec") ? $mxl = $tt->getData("teacher", "TeacherName", $rowT['TeacherName'], "MaxNoOfLec") : $mxl =  100000;
+                            if (($tt->isCellNull($rowT['TeacherName'], 'Lecture_No', $lec, $day)) && ($tt->isCellNull($rowT['TeacherName'], 'Lecture_No', $L, $day)) && $tt->noOfLec($rowT['TeacherName']) < $mxl - 1) {
                         ?>
                               <option value="<?php echo $rowT['TeacherName']; ?>">
                           <?php }
@@ -213,7 +228,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $tableR = $tt->getTableData('room');
                         foreach ($tableR as $rowR) :
                           if ($rowR['RoomNo']) {
-                            if ($tt->isCellNull($rowR['RoomNo'], 'Lecture_No', $lec, $day)) {
+                            if (($tt->isCellNull($rowR['RoomNo'], 'Lecture_No', $lec, $day)) && ($tt->isCellNull($rowR['RoomNo'], 'Lecture_No', $L, $day))) {
                         ?>
                               <option value="<?php echo $rowR['RoomNo']; ?>">
                           <?php }
