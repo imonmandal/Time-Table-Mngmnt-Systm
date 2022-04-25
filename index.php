@@ -175,7 +175,7 @@
       <div class="fm-ele2">
         <form action="class.php" method="get">
           <label>
-            Class <input list="classes" name="class-data" placeholder="Select Class">
+            Class <input list="classes" name="class-data" placeholder="Select Class" required>
             <datalist id="classes">
               <?php
               $tableC = $tt->getTableData('class');
@@ -192,7 +192,7 @@
       <div class="fm-ele2">
         <form action="teacher.php" method="get">
           <label>
-            Teacher <input list="teachers" name="teacher-data" placeholder="Select Teacher">
+            Teacher <input list="teachers" name="teacher-data" placeholder="Select Teacher" required>
             <datalist id="teachers">
               <?php
               $tableT = $tt->getTableData('teacher');
@@ -209,7 +209,7 @@
       <div class="fm-ele2">
         <form action="room.php" method="get">
           <label>
-            Room <input list="rooms" name="room-data" placeholder="Select Room">
+            Room <input list="rooms" name="room-data" placeholder="Select Room" required>
             <datalist id="rooms">
               <?php
               $tableR = $tt->getTableData('room');
