@@ -67,30 +67,32 @@
           $r = 1;
         }
 
-        if ($t == 0 && $r == 0) {
-          $tt->getData("teacher", "TeacherName", $teacher, "MaxNoOfLec") ? $mxl = $tt->getData("teacher", "TeacherName", $teacher, "MaxNoOfLec") : $mxl =  100000;
-          if ($tt->noOfLec($teacher) < $mxl) {
-            $dataC = "lec^" . $teacher . "#" . $room . "#" . $subject;
-            $dataT = $class . "#" . $room . "#" . $subject;
-            $dataR = $class . "#" . $teacher . "#" . $subject;
-
-            $tt->updateTable($class, 'Lecture_No', $lec, $day, $dataC);
-            $tt->updateTable($teacher, 'Lecture_No', $lec, $day, $dataT);
-            $tt->updateTable($room, 'Lecture_No', $lec, $day, $dataR);
-            echo '<script type="text/javascript">alert("Data entered successfully");</script>';
-          } else {
-            $s = sprintf('<script type="text/javascript">alert("No of lectures of teacher %s have reached the maximum limit");</script>', $teacher);
-            echo $s;
-          }
-        } elseif ($t == 1 && $r == 0) {
+        if ($t == 1 && $r == 0) {
           $s = sprintf('<script type="text/javascript">alert("%s is having another lecture");</script>', $teacher);
           echo $s;
         } elseif ($t == 0 && $r == 1) {
           $s = sprintf('<script type="text/javascript">alert("Room %s is already occupied");</script>', $room);
           echo $s;
-        } else {
+        } elseif ($t == 1 && $r == 1) {
           $s = sprintf('<script type="text/javascript">alert("%s is having another lecture and Room %s is already occupied");</script>', $teacher, $room);
           echo $s;
+        } else {
+          $tt->getData("teacher", "TeacherName", $teacher, "MaxNoOfLec") ? $mxl = $tt->getData("teacher", "TeacherName", $teacher, "MaxNoOfLec") : $mxl =  100000;
+          if ($tt->noOfLec($teacher) >= $mxl) {
+            $s = sprintf('<script type="text/javascript">alert("No of lectures of teacher %s have reached the maximum limit");</script>', $teacher);
+            echo $s;
+          } else {
+            $dataC = "lec^" . $teacher . "#" . $room . "#" . $subject;
+            $dataT = $class . "#" . $room . "#" . $subject;
+            $dataR = $class . "#" . $teacher . "#" . $subject;
+
+            $e1 = $tt->updateTable($class, 'Lecture_No', $lec, $day, $dataC); // enter
+            $e2 = $tt->updateTable($teacher, 'Lecture_No', $lec, $day, $dataT);
+            $e3 = $tt->updateTable($room, 'Lecture_No', $lec, $day, $dataR);
+            if (!($e1 && $e2 && $e3)) {
+              echo '<script type="text/javascript">alert("Could not enter data due to some issues with database");</script>';
+            }
+          }
         }
       }
     }
@@ -103,10 +105,12 @@
       $room = $_POST['room'];
       $teacher = $_POST['teacher'];
 
-      $tt->updateTable($class, 'Lecture_No', $lec, $day, 'NULL');
-      $tt->updateTable($teacher, 'Lecture_No', $lec, $day, 'NULL');
-      $tt->updateTable($room, 'Lecture_No', $lec, $day, 'NULL');
-      echo '<script type="text/javascript">alert("Data deleted successfully");</script>';
+      $d1 = $tt->updateTable($class, 'Lecture_No', $lec, $day, 'NULL');
+      $d2 = $tt->updateTable($teacher, 'Lecture_No', $lec, $day, 'NULL');
+      $d3 = $tt->updateTable($room, 'Lecture_No', $lec, $day, 'NULL');
+      if (!($d1 && $d2 && $d3)) {
+        echo '<script type="text/javascript">alert("Could not delete data due to some issues with database");</script>';
+      }
     }
   }
   ?>

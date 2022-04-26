@@ -65,13 +65,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $r = 1;
       }
 
-      if ($t == 0 && $r == 0) {
+      if ($t == 1 && $r == 0) {
+        $s = sprintf('<script type="text/javascript">alert("%s is having another lecture");</script>', $teacher);
+        echo $s;
+      } elseif ($t == 0 && $r == 1) {
+        $s = sprintf('<script type="text/javascript">alert("Room %s is already occupied");</script>', $room);
+        echo $s;
+      } elseif ($t == 1 && $r == 1) {
+        $s = sprintf('<script type="text/javascript">alert("%s is having another lecture and Room %s is already occupied");</script>', $teacher, $room);
+        echo $s;
+      } else {
         $tt->getData("teacher", "TeacherName", $teacher, "MaxNoOfLec") ? $mxl = $tt->getData("teacher", "TeacherName", $teacher, "MaxNoOfLec") : $mxl =  100000;
-        if ($tt->noOfLec($teacher) < $mxl - 1) {
+        if ($tt->noOfLec($teacher) >= $mxl - 1) {
+          $s = sprintf('<script type="text/javascript">alert("No of lectures of teacher %s have reached the maximum limit");</script>', $teacher);
+          echo $s;
+        } else {
           $dataC = "";
 
+          $e1 = true;
           if ($tt->isCellNull($class, 'Lecture_No', $lec, $day)) {
-            $tt->updateTable($class, 'Lecture_No', $L, $day, "|Lab|");
+            $e1 = $tt->updateTable($class, 'Lecture_No', $L, $day, "|Lab|");
 
             $dataC = "lab^" . $teacher . "#" . $room . "#" . $lab;
           } else {
@@ -79,29 +92,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $dataC = $d . "^" . $teacher . "#" . $room . "#" . $lab;
           }
 
-          $tt->updateTable($teacher, 'Lecture_No', $L, $day, "|Lab|");
-          $tt->updateTable($room, 'Lecture_No', $L, $day, "|Lab|");
+          $e2 = $tt->updateTable($teacher, 'Lecture_No', $L, $day, "|Lab|");
+          $e3 = $tt->updateTable($room, 'Lecture_No', $L, $day, "|Lab|");
 
           $dataT = $class . "#" . $room . "#" . $lab;
           $dataR = $class . "#" . $teacher . "#" . $lab;
 
-          $tt->updateTable($class, 'Lecture_No', $lec, $day, $dataC);
-          $tt->updateTable($teacher, 'Lecture_No', $lec, $day, $dataT);
-          $tt->updateTable($room, 'Lecture_No', $lec, $day, $dataR);
-          echo '<script type="text/javascript">alert("Data entered successfully");</script>';
-        } else {
-          $s = sprintf('<script type="text/javascript">alert("No of lectures of teacher %s have reached the maximum limit");</script>', $teacher);
-          echo $s;
+          $e4 = $tt->updateTable($class, 'Lecture_No', $lec, $day, $dataC);
+          $e5 = $tt->updateTable($teacher, 'Lecture_No', $lec, $day, $dataT);
+          $e6 = $tt->updateTable($room, 'Lecture_No', $lec, $day, $dataR);
+
+          if (!($e1 && $e2 && $e3 && $e4 && $e5 && $e6)) {
+            echo '<script type="text/javascript">alert("Could not enter data due to some issues with database");</script>';
+          }
         }
-      } elseif ($t == 1 && $r == 0) {
-        $s = sprintf('<script type="text/javascript">alert("%s is having another lecture");</script>', $teacher);
-        echo $s;
-      } elseif ($t == 0 && $r == 1) {
-        $s = sprintf('<script type="text/javascript">alert("Room %s is already occupied");</script>', $room);
-        echo $s;
-      } else {
-        $s = sprintf('<script type="text/javascript">alert("%s is having another lecture and Room %s is already occupied");</script>', $teacher, $room);
-        echo $s;
       }
     }
   }
@@ -124,22 +128,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
       $L = $L + 1;
     }
+    $d1 = true;
+    $d2 = true;
     if (count($lbs) == 2) {
-      $tt->updateTable($class, 'Lecture_No', $L, $day, "NULL");
+      $d1 = $tt->updateTable($class, 'Lecture_No', $L, $day, "NULL");
 
-      $tt->updateTable($class, 'Lecture_No', $lec, $day, 'NULL');
+      $d2 = $tt->updateTable($class, 'Lecture_No', $lec, $day, 'NULL');
     } else {
       array_splice($lbs, $index, 1); // array, index, how many values to delete
       $d = implode('^', $lbs);
-      $tt->updateTable($class, 'Lecture_No', $lec, $day, $d);
+      $d2 = $tt->updateTable($class, 'Lecture_No', $lec, $day, $d);
     }
 
-    $tt->updateTable($teacher, 'Lecture_No', $L, $day, "NULL");
-    $tt->updateTable($room, 'Lecture_No', $L, $day, "NULL");
+    $d3 = $tt->updateTable($teacher, 'Lecture_No', $L, $day, "NULL");
+    $d4 = $tt->updateTable($room, 'Lecture_No', $L, $day, "NULL");
 
-    $tt->updateTable($teacher, 'Lecture_No', $lec, $day, 'NULL');
-    $tt->updateTable($room, 'Lecture_No', $lec, $day, 'NULL');
-    echo '<script type="text/javascript">alert("Data deleted successfully");</script>';
+    $d5 = $tt->updateTable($teacher, 'Lecture_No', $lec, $day, 'NULL');
+    $d6 = $tt->updateTable($room, 'Lecture_No', $lec, $day, 'NULL');
+    if (!($d1 && $d2 && $d3 && $d4 && $d5 && $d6)) {
+      echo '<script type="text/javascript">alert("Could not delete data due to some issues with database");</script>';
+    }
   }
 }
 ?>

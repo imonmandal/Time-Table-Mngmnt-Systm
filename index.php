@@ -57,9 +57,6 @@
   $tt = new time_table($db);
 
   if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    if (isset($_GET['del-msg'])) {
-      echo '<script type="text/javascript">alert("Data deleted successfully");</script>';
-    }
     if (isset($_GET['class-table-not-pres'])) {
       echo sprintf('<script type="text/javascript">alert("Table of class %s is not there in database");</script>', $_GET['class-table-not-pres']);
     }
@@ -75,7 +72,7 @@
 
     if (isset($_POST['clear'])) {
       $tt->dropDatabase();
-      header("Location: index.php?del-msg=1");
+      header("Location: index.php");
       exit();
     }
 
@@ -109,6 +106,7 @@
   ?>
   <title>Time Table</title>
   <link rel="stylesheet" href="html/scss/index.css">
+  <script src="html/js/index.js"></script>
   <style>
     .btm {
       display: flex;
@@ -165,7 +163,7 @@
         </div>
         <div class="fm-ele1">
           <button form="form1" type="submit" name="enter"><span>Enter Data</span></button>
-          <button form="form2" type="submit" name="clear"><span>Clear Database</span></button>
+          <button form="form2" type="submit" name="clear" Onclick="return ConfirmDelete();" value="1"><span>Clear Database</span></button>
         </div>
       </div>
     </div>
