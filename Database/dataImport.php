@@ -3,7 +3,6 @@
 require_once('vendor/autoload.php');
 require_once('DBController.php');
 
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Reader\Csv;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 
@@ -17,19 +16,19 @@ class dataImport
         $this->db = $db;
     }
 
-    public function impData($xlFile, $table, $column) // col->array of col name of table in db
+    public function impData($file, $table, $column) // col->array of col name of table in db
     {
-        $arr_file = explode('.', $xlFile['name']);
+        $arr_file = explode('.', $file['name']);
         $extension = end($arr_file);
         $reader = null;
 
         if ('csv' == $extension) {
-            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
+            $reader = new Csv();
         } else {
-            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+            $reader = new Xlsx();
         }
 
-        $spreadsheet = $reader->load($xlFile['tmp_name']);
+        $spreadsheet = $reader->load($file['tmp_name']);
 
         // Note that sheets are indexed from 0
         $sheetData = $spreadsheet->getSheet(0)->toArray();
