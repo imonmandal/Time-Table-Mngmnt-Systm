@@ -34,7 +34,7 @@
 
 <body>
   <header><?php echo $rm; ?> Time Table</header>
-  <div>
+  <div class="tp">
     <a href="index.php">Home
     </a>
   </div>

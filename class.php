@@ -123,7 +123,7 @@
 
 <body>
   <header><?php echo $class; ?> Time Table</header>
-  <div>
+  <div class="tp">
     <a href="index.php">Home
     </a>
   </div>

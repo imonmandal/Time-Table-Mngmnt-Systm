@@ -165,14 +165,21 @@ body header {
   width: 1265px;
   height: 2.5rem;
   text-align: center;
-  margin-top: 5px;
   font-size: 2rem;
   font-weight: bold;
+  padding: 5px;
+  position: fixed;
+  background-color: #b5f5f0;
+  z-index: 1;
 }
 
 body div a {
   margin: 0 1rem;
   font-size: 1rem;
+}
+
+body .tp {
+  padding-top: 3rem;
 }
 
 .mpx {
