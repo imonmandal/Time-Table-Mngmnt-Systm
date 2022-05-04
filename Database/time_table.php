@@ -115,10 +115,10 @@ class time_table
     {
         $db = new DBController();
         $di = new dataImport($db);
-        $di->impData($cA, 'class', array("ClassName"));
-        $di->impData($tA, 'teacher', array("TeacherName", "MaxNoOfLec"));
-        $di->impData($rA, 'room', array("RoomNo"));
-        $di->impData($sA, 'subject', array("SubjectName", "LabName"));
+        $di->impData($cA, 'class', array("ClassName"), 1);
+        $di->impData($tA, 'teacher', array("TeacherName", "MaxNoOfLec"), 2);
+        $di->impData($rA, 'room', array("RoomNo"), 1);
+        $di->impData($sA, 'subject', array("SubjectName", "LabName"), 2);
 
         $cD = $this->getTableData('class');
         foreach ($cD as $row) :

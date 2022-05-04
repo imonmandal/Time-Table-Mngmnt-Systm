@@ -16,8 +16,8 @@ class dataImport
         $this->db = $db;
     }
 
-    public function impData($file, $table, $column) // col->array of col name of table in db
-    {
+    public function impData($file, $table, $column, $cols) // col->array of col name of table in db
+    {       // cols->number of cols to take from xlsheet
         $arr_file = explode('.', $file['name']);
         $extension = end($arr_file);
         $reader = null;
@@ -37,7 +37,8 @@ class dataImport
         if (!empty($sheetData)) {
             for ($row = 1; $row < count($sheetData); $row++) { // fetch row (indexing starts from 0)
                 $data = "";
-                for ($col = 0; $col < count($sheetData[$row]) - 1; $col++) {
+                // for ($col = 0; $col < count($sheetData[$row]) - 1; $col++) {
+                for ($col = 0; $col < $cols - 1; $col++) {
                     $d = $sheetData[$row][$col];
                     if (strlen($d) == 0) {
                         $data = $data . "NULL" . ", ";
@@ -45,7 +46,8 @@ class dataImport
                         $data = $data . "'" . $d . "'" . ", ";
                     }
                 }
-                $d2 = $sheetData[$row][count($sheetData[$row]) - 1];
+                // $d2 = $sheetData[$row][count($sheetData[$row]) - 1];
+                $d2 = $sheetData[$row][$cols - 1];
                 if (strlen($d2) == 0) {
                     $data = $data . "NULL";
                 } else {

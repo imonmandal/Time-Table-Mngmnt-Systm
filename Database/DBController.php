@@ -14,9 +14,12 @@ class DBController
     // call constructor
     public function __construct()
     {
+        // Create connection
         $this->con = mysqli_connect($this->host, $this->user, $this->password, $this->database);
+
+        // Check connection
         if ($this->con->connect_error) {
-            echo "Fail " . $this->con->connect_error;
+            die("Connection failed: " . $this->con->connect_error);
         }
     }
 

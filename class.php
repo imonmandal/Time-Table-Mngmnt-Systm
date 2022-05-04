@@ -27,7 +27,7 @@
       $class  = $_GET['class-return'];
       $L = $_GET['clash-lec'];
       $dy = $_GET['day'];
-      $s = sprintf('<script type="text/javascript">alert("Class %s is having lecture on %s in lecture number %s");</script>', $class, $dy, $L);
+      $s = sprintf('<script type="text/javascript">alert("Cannot enter lab data because class %s is having lecture on %s in lecture number %s");</script>', $class, $dy, $L);
       echo $s;
     }
   }

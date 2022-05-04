@@ -14,7 +14,7 @@
 
     $con = mysqli_connect($host, $user, $password);
     if ($con->connect_error) {
-      echo "Fail " . $con->connect_error;
+      die("Connection failed: " . $con->connect_error);
     } else {
       $query_string = "create database `{$database}`;";
       $result = $con->query($query_string);
