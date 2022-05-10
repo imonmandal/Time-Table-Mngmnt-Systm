@@ -108,8 +108,8 @@
 
   ?>
   <title>Time Table</title>
-  <link rel="stylesheet" href="html/scss/index.css">
   <script src="html/js/index.js"></script>
+  <link rel="stylesheet" href="html/scss/index.css">
   <style>
     .btm {
       display: flex;
@@ -133,6 +133,10 @@
       font-size: 1rem;
       padding: 0 .5rem;
       border-radius: 2.5px;
+    }
+
+    button {
+      cursor: pointer;
     }
   </style>
 </head>

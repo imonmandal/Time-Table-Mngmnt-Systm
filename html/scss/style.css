@@ -7,7 +7,7 @@
 
 .time-table {
   width: 1920px;
-  margin: 1rem;
+  margin: 2.5rem 1rem;
   background-color: #ffff009c;
   padding: 1rem;
 }
@@ -173,13 +173,23 @@ body header {
   z-index: 1;
 }
 
-body div a {
-  margin: 0 1rem;
-  font-size: 1rem;
+body .tp {
+  padding-top: 1rem;
+  margin-bottom: 2rem;
 }
 
-body .tp {
-  padding-top: 3rem;
+body .tp a {
+  font-size: 1rem;
+  margin: 0 1rem;
+  position: fixed;
+  z-index: 2;
+  text-decoration: none;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #8a1414;
+  border: 1px solid #8a1414;
+  border-radius: 5px;
+  padding: 0 2.5px;
 }
 
 .mpx {
@@ -192,5 +202,9 @@ body .tp {
 
 .num {
   font-size: 2rem;
+}
+
+button {
+  cursor: pointer;
 }
 /*# sourceMappingURL=style.css.map */
