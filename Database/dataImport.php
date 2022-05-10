@@ -40,6 +40,9 @@ class dataImport
                 // for ($col = 0; $col < count($sheetData[$row]) - 1; $col++) {
                 for ($col = 0; $col < $cols - 1; $col++) {
                     $d = $sheetData[$row][$col];
+                    if (strpos($d, "'") != false || strpos($d, '"') != false) {
+                        return false; // to check for quotes
+                    }
                     if (strlen($d) == 0) {
                         $data = $data . "NULL" . ", ";
                     } else {
@@ -59,6 +62,7 @@ class dataImport
                 $query_string = "INSERT INTO `{$table}` ({$columns}) VALUES ({$data});";
                 $this->db->con->query($query_string);
             }
+            return true;
         }
     }
 }

@@ -86,6 +86,21 @@ class time_table
         }
     }
 
+    public function noOfLec($table)
+    {
+        $tD = $this->getTableData($table);
+        $week = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
+        $c = 0;
+        for ($row = 0; $row < count($tD); $row++) {
+            for ($col = 0; $col < 6; $col++) {
+                if ($tD[$row][$week[$col]]) {
+                    $c++;
+                }
+            }
+        }
+        return $c;
+    }
+
     public function doesTableExists($table)
     {
         if ($this->db->con != null) {
@@ -97,57 +112,6 @@ class time_table
                 return 0;
             }
         }
-    }
-
-    public function helperCT($table, $sizOfCell, $n)
-    {
-        $query_string = "CREATE TABLE `{$table}` (Lecture_No varchar(5), Monday varchar($sizOfCell), Tuesday varchar($sizOfCell), Wednesday varchar($sizOfCell), Thursday varchar($sizOfCell), Friday varchar($sizOfCell), Saturday varchar($sizOfCell));";
-        $this->db->con->query($query_string);
-
-        $n = (int)$n;
-        for ($i = 1; $i <= $n; $i++) {
-            $query_string = "insert into `{$table}` (Lecture_No) values ('{$i}');";
-            $this->db->con->query($query_string);
-        }
-    }
-
-    public function createTables($cA, $tA, $rA, $sA, $n)
-    {
-        $db = new DBController();
-        $di = new dataImport($db);
-        $di->impData($cA, 'class', array("ClassName"), 1);
-        $di->impData($tA, 'teacher', array("TeacherName", "MaxNoOfLec"), 2);
-        $di->impData($rA, 'room', array("RoomNo"), 1);
-        $di->impData($sA, 'subject', array("SubjectName", "LabName"), 2);
-
-        $cD = $this->getTableData('class');
-        foreach ($cD as $row) :
-            if ($row["ClassName"]) { // to avoid null values in excel sheet
-                $this->helperCT($row["ClassName"], 500, $n);
-            }
-        endforeach;
-
-        $tD = $this->getTableData('teacher');
-        foreach ($tD as $row) :
-            if ($row["TeacherName"]) {
-                $this->helperCT($row["TeacherName"], 250, $n);
-            }
-        endforeach;
-
-        $rD = $this->getTableData('room');
-        foreach ($rD as $row) :
-            if ($row["RoomNo"]) {
-                $this->helperCT($row["RoomNo"], 250, $n);
-            }
-        endforeach;
-
-        $this->uid('lec', 'sr_no', 1, 'lec', $n);
-    }
-
-    public function dropDatabase()
-    {
-        $query_string = "DROP DATABASE IF EXISTS `time_table`;";
-        $this->db->con->query($query_string);
     }
 
     public function helperDT($table)
@@ -191,19 +155,62 @@ class time_table
         $this->uid('lec', 'sr_no', 1, 'lec', 'NULL');
     }
 
-    public function noOfLec($table)
+    public function helperCT($table, $sizOfCell, $n)
     {
-        $tD = $this->getTableData($table);
-        $week = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
-        $c = 0;
-        for ($row = 0; $row < count($tD); $row++) {
-            for ($col = 0; $col < 6; $col++) {
-                if ($tD[$row][$week[$col]]) {
-                    $c++;
-                }
-            }
+        $query_string = "CREATE TABLE `{$table}` (Lecture_No varchar(5), Monday varchar($sizOfCell), Tuesday varchar($sizOfCell), Wednesday varchar($sizOfCell), Thursday varchar($sizOfCell), Friday varchar($sizOfCell), Saturday varchar($sizOfCell));";
+        $this->db->con->query($query_string);
+
+        $n = (int)$n;
+        for ($i = 1; $i <= $n; $i++) {
+            $query_string = "insert into `{$table}` (Lecture_No) values ('{$i}');";
+            $this->db->con->query($query_string);
         }
-        return $c;
+    }
+
+    public function createTables($cA, $tA, $rA, $sA, $n)
+    {
+        $db = new DBController();
+        $di = new dataImport($db);
+        $f1 = $di->impData($cA, 'class', array("ClassName"), 1);
+        $f2 = $di->impData($tA, 'teacher', array("TeacherName", "MaxNoOfLec"), 2);
+        $f3 = $di->impData($rA, 'room', array("RoomNo"), 1);
+        $f4 = $di->impData($sA, 'subject', array("SubjectName", "LabName"), 2);
+
+        if (!($f1 && $f2 && $f3 && $f4)) {
+            $this->clear();
+            return false;
+        }
+
+        $cD = $this->getTableData('class');
+        foreach ($cD as $row) :
+            if ($row["ClassName"]) { // to avoid null values in excel sheet
+                $this->helperCT($row["ClassName"], 500, $n);
+            }
+        endforeach;
+
+        $tD = $this->getTableData('teacher');
+        foreach ($tD as $row) :
+            if ($row["TeacherName"]) {
+                $this->helperCT($row["TeacherName"], 250, $n);
+            }
+        endforeach;
+
+        $rD = $this->getTableData('room');
+        foreach ($rD as $row) :
+            if ($row["RoomNo"]) {
+                $this->helperCT($row["RoomNo"], 250, $n);
+            }
+        endforeach;
+
+        $this->uid('lec', 'sr_no', 1, 'lec', $n);
+
+        return true;
+    }
+
+    public function dropDatabase()
+    {
+        $query_string = "DROP DATABASE IF EXISTS `time_table`;";
+        $this->db->con->query($query_string);
     }
 
     public function download($path)
