@@ -13,6 +13,7 @@ $class = 'TE1';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   if (isset($_POST['lab'])) {
+
     $lec = $_POST['lec'];
     $day = $_POST['day'];
     $class = $_POST['class'];
@@ -40,6 +41,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $room = $_POST['room'];
     $teacher = $_POST['teacher'];
     $lab = $_POST['lab'];
+    $L = (int)$lec;
+    if ($L % 2 == 0) {
+      $L = $L - 1;
+    } else {
+      $L = $L + 1;
+    }
 
     $f1 = $tt->doesTableExists($teacher);
     $f2 = $tt->doesTableExists($room);
@@ -81,6 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           echo $s;
         } else {
           $dataC = "";
+          $backup_class_data = $tt->getData($class, 'Lecture_No', $lec, $day);
 
           $e1 = true;
           if ($tt->isCellNull($class, 'Lecture_No', $lec, $day)) {
@@ -104,6 +112,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
           if (!($e1 && $e2 && $e3 && $e4 && $e5 && $e6)) {
             echo '<script type="text/javascript">alert("Could not enter data due to some issues with database");</script>';
+
+            if ($backup_class_data) {
+              $tt->updateTable($class, 'Lecture_No', $lec, $day, $backup_class_data);
+            } else {
+              $tt->updateTable($class, 'Lecture_No', $L, $day, "NULL");
+              $tt->updateTable($class, 'Lecture_No', $lec, $day, "NULL");
+            }
+            $tt->updateTable($teacher, 'Lecture_No', $L, $day, "NULL");
+            $tt->updateTable($room, 'Lecture_No', $L, $day, "NULL");
+            $tt->updateTable($teacher, 'Lecture_No', $lec, $day, "NULL");
+            $tt->updateTable($room, 'Lecture_No', $lec, $day, "NULL");
           }
         }
       }
@@ -118,16 +137,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $room = $_POST['room'];
     $teacher = $_POST['teacher'];
     $index = $_POST['index'];
-
-    $cD = $tt->getData($class, 'Lecture_No', $lec, $day); // cell data
-    $lbs = explode('^', $cD);
-
     $L = (int)$lec;
     if ($L % 2 == 0) {
       $L = $L - 1;
     } else {
       $L = $L + 1;
     }
+
+    $tt->getData($class, 'Lecture_No', $L, $day) ? $backup_class_1 = $tt->getData($class, 'Lecture_No', $L, $day) : $backup_class_1 = "NULL";
+    $tt->getData($class, 'Lecture_No', $lec, $day) ? $backup_class_2 = $tt->getData($class, 'Lecture_No', $lec, $day) : $backup_class_2 = "NULL";
+    $tt->getData($teacher, 'Lecture_No', $L, $day) ? $backup_teacher_1 = $tt->getData($teacher, 'Lecture_No', $L, $day) : $backup_teacher_1 = "NULL";
+    $tt->getData($teacher, 'Lecture_No', $lec, $day) ? $backup_teacher_2 = $tt->getData($teacher, 'Lecture_No', $lec, $day) : $backup_teacher_2 = "NULL";
+    $tt->getData($room, 'Lecture_No', $L, $day) ? $backup_room_1 = $tt->getData($room, 'Lecture_No', $L, $day) : $backup_room_1 = "NULL";
+    $tt->getData($room, 'Lecture_No', $lec, $day) ? $backup_room_2 = $tt->getData($room, 'Lecture_No', $lec, $day) : $backup_room_2 = "NULL";
+
+    $cD = $tt->getData($class, 'Lecture_No', $lec, $day); // cell data
+    $lbs = explode('^', $cD);
+
     $d1 = true;
     $d2 = true;
     if (count($lbs) == 2) {
@@ -147,6 +173,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $d6 = $tt->updateTable($room, 'Lecture_No', $lec, $day, 'NULL');
     if (!($d1 && $d2 && $d3 && $d4 && $d5 && $d6)) {
       echo '<script type="text/javascript">alert("Could not delete data due to some issues with database");</script>';
+
+      $tt->updateTable($class, 'Lecture_No', $L, $day, $backup_class_1);
+      $tt->updateTable($class, 'Lecture_No', $lec, $day, $backup_class_2);
+      $tt->updateTable($teacher, 'Lecture_No', $L, $day, $backup_teacher_1);
+      $tt->updateTable($teacher, 'Lecture_No', $lec, $day, $backup_teacher_2);
+      $tt->updateTable($room, 'Lecture_No', $L, $day, $backup_room_1);
+      $tt->updateTable($room, 'Lecture_No', $lec, $day, $backup_room_2);
     }
   }
 }

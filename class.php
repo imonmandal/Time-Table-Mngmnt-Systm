@@ -86,11 +86,16 @@
             $dataT = $class . "#" . $room . "#" . $subject;
             $dataR = $class . "#" . $teacher . "#" . $subject;
 
-            $e1 = $tt->updateTable($class, 'Lecture_No', $lec, $day, $dataC); // enter
+            // enter
+            $e1 = $tt->updateTable($class, 'Lecture_No', $lec, $day, $dataC);
             $e2 = $tt->updateTable($teacher, 'Lecture_No', $lec, $day, $dataT);
             $e3 = $tt->updateTable($room, 'Lecture_No', $lec, $day, $dataR);
+
             if (!($e1 && $e2 && $e3)) {
               echo '<script type="text/javascript">alert("Could not enter data due to some issues with database");</script>';
+              $tt->updateTable($class, 'Lecture_No', $lec, $day, "NULL");
+              $tt->updateTable($teacher, 'Lecture_No', $lec, $day, "NULL");
+              $tt->updateTable($room, 'Lecture_No', $lec, $day, "NULL");
             }
           }
         }
@@ -105,11 +110,20 @@
       $room = $_POST['room'];
       $teacher = $_POST['teacher'];
 
+      $tt->getData($class, 'Lecture_No', $lec, $day) ? $backup_class_data = $tt->getData($class, 'Lecture_No', $lec, $day) : $backup_class_data = "NULL";
+      $tt->getData($teacher, 'Lecture_No', $lec, $day) ? $backup_teacher_data = $tt->getData($teacher, 'Lecture_No', $lec, $day) : $backup_teacher_data = "NULL";
+      $tt->getData($room, 'Lecture_No', $lec, $day) ? $backup_room_data = $tt->getData($room, 'Lecture_No', $lec, $day) : $backup_room_data = "NULL";
+
       $d1 = $tt->updateTable($class, 'Lecture_No', $lec, $day, 'NULL');
       $d2 = $tt->updateTable($teacher, 'Lecture_No', $lec, $day, 'NULL');
       $d3 = $tt->updateTable($room, 'Lecture_No', $lec, $day, 'NULL');
+
       if (!($d1 && $d2 && $d3)) {
         echo '<script type="text/javascript">alert("Could not delete data due to some issues with database");</script>';
+
+        $tt->updateTable($class, 'Lecture_No', $lec, $day, $backup_class_data);
+        $tt->updateTable($teacher, 'Lecture_No', $lec, $day, $backup_teacher_data);
+        $tt->updateTable($room, 'Lecture_No', $lec, $day, $backup_room_data);
       }
     }
   }
