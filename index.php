@@ -85,11 +85,8 @@
       $rA = $_FILES['rm'];
       $sA = $_FILES['sb'];
       $n = $_POST['l'];
-      if ($tt->createTables($cA, $tA, $rA, $sA, $n)) {
-        echo '<script type="text/javascript">alert("Data entered successfully");</script>';
-      } else {
-        echo '<script type="text/javascript">alert("Please remove single quotes (\') or double quotes (\") from excel data");</script>';
-      }
+      $tt->createTables($cA, $tA, $rA, $sA, $n);
+      echo '<script type="text/javascript">alert("Data entered successfully");</script>';
     }
 
     if (isset($_POST['download'])) {

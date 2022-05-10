@@ -40,9 +40,8 @@ class dataImport
                 // for ($col = 0; $col < count($sheetData[$row]) - 1; $col++) {
                 for ($col = 0; $col < $cols - 1; $col++) {
                     $d = $sheetData[$row][$col];
-                    if (strpos($d, "'") != false || strpos($d, '"') != false) {
-                        return false; // to check for quotes
-                    }
+                    $d = str_replace("'", "", $d); // replace quotes
+                    $d = str_replace('"', '', $d);
                     if (strlen($d) == 0) {
                         $data = $data . "NULL" . ", ";
                     } else {
@@ -51,6 +50,8 @@ class dataImport
                 }
                 // $d2 = $sheetData[$row][count($sheetData[$row]) - 1];
                 $d2 = $sheetData[$row][$cols - 1];
+                $d2 = str_replace("'", "", $d2); // replace quotes
+                $d2 = str_replace('"', '', $d2);
                 if (strlen($d2) == 0) {
                     $data = $data . "NULL";
                 } else {
@@ -62,7 +63,6 @@ class dataImport
                 $query_string = "INSERT INTO `{$table}` ({$columns}) VALUES ({$data});";
                 $this->db->con->query($query_string);
             }
-            return true;
         }
     }
 }
