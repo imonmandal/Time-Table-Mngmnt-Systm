@@ -107,35 +107,6 @@
   <title>Time Table</title>
   <script src="html/js/index.js"></script>
   <link rel="stylesheet" href="html/scss/index.css">
-  <style>
-    .btm {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 1rem;
-    }
-
-    .btm label {
-      font-size: 1.5rem;
-    }
-
-    .btm label input {
-      width: 20rem;
-      height: 1.25rem;
-      padding: 0 .75rem;
-      border: 3px solid rgb(167, 166, 166);
-    }
-
-    .btm button {
-      font-size: 1rem;
-      padding: 0 .5rem;
-      border-radius: 2.5px;
-    }
-
-    button {
-      cursor: pointer;
-    }
-  </style>
 </head>
 
 <body>
