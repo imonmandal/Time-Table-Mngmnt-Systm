@@ -236,6 +236,22 @@
                 <div class="cell-form">
                   <div class="form-ele">
                     <label>
+                      <span class="mpx2">Select Subject</span> <input required list="subjects-<?php echo $row['days'] . "-" . $i; ?>" name="subject" class="inp" form="form1-<?php echo $row['days'] . "-" . $i; ?>">
+                      <datalist id="subjects-<?php echo $row['days'] . "-" . $i; ?>">
+                        <?php
+                        $tableS = $tt->getTableData('subject');
+                        foreach ($tableS as $rowS) :
+                          if ($rowS['SubjectName']) {
+                        ?>
+                            <option value="<?php echo $rowS['SubjectName']; ?>">
+                          <?php }
+                        endforeach;
+                          ?>
+                      </datalist>
+                    </label>
+                  </div>
+                  <div class="form-ele">
+                    <label>
                       Select Teacher <input required list="teachers-<?php echo $row['days'] . "-" . $i; ?>" name="teacher" class="inp" form="form1-<?php echo $row['days'] . "-" . $i; ?>">
                       <datalist id="teachers-<?php echo $row['days'] . "-" . $i; ?>">
                         <?php
@@ -266,22 +282,6 @@
                               <option value="<?php echo $rowR['RoomNo']; ?>">
                           <?php }
                           }
-                        endforeach;
-                          ?>
-                      </datalist>
-                    </label>
-                  </div>
-                  <div class="form-ele">
-                    <label>
-                      <span class="mpx2">Select Subject</span> <input required list="subjects-<?php echo $row['days'] . "-" . $i; ?>" name="subject" class="inp" form="form1-<?php echo $row['days'] . "-" . $i; ?>">
-                      <datalist id="subjects-<?php echo $row['days'] . "-" . $i; ?>">
-                        <?php
-                        $tableS = $tt->getTableData('subject');
-                        foreach ($tableS as $rowS) :
-                          if ($rowS['SubjectName']) {
-                        ?>
-                            <option value="<?php echo $rowS['SubjectName']; ?>">
-                          <?php }
                         endforeach;
                           ?>
                       </datalist>

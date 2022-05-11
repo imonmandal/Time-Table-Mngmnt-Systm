@@ -244,6 +244,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <form action="lab.php" method="post">
                   <div class="form-ele">
                     <label>
+                      <span class="mpx2">Select Lab</span> <input required list="subjects-<?php echo $day . "-" . $i; ?>" name="lab" class="inp">
+                      <datalist id="subjects-<?php echo $day . "-" . $i; ?>">
+                        <?php
+                        $tableS = $tt->getTableData('subject');
+                        foreach ($tableS as $rowS) :
+                          if ($rowS['LabName']) {
+                        ?>
+                            <option value="<?php echo $rowS['LabName']; ?>">
+                          <?php }
+                        endforeach;
+                          ?>
+                      </datalist>
+                    </label>
+                  </div>
+                  <div class="form-ele">
+                    <label>
                       <span>Select Teacher</span> <input required list="teachers-<?php echo $day . "-" . $i; ?>" name="teacher" class="inp">
                       <datalist id="teachers-<?php echo $day . "-" . $i; ?>">
                         <?php
@@ -274,22 +290,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                               <option value="<?php echo $rowR['RoomNo']; ?>">
                           <?php }
                           }
-                        endforeach;
-                          ?>
-                      </datalist>
-                    </label>
-                  </div>
-                  <div class="form-ele">
-                    <label>
-                      <span class="mpx2">Select Lab</span> <input required list="subjects-<?php echo $day . "-" . $i; ?>" name="lab" class="inp">
-                      <datalist id="subjects-<?php echo $day . "-" . $i; ?>">
-                        <?php
-                        $tableS = $tt->getTableData('subject');
-                        foreach ($tableS as $rowS) :
-                          if ($rowS['LabName']) {
-                        ?>
-                            <option value="<?php echo $rowS['LabName']; ?>">
-                          <?php }
                         endforeach;
                           ?>
                       </datalist>
