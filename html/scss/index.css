@@ -148,3 +148,7 @@ h1 {
 button {
   cursor: pointer;
 }
+
+input[type="file"] {
+  cursor: pointer;
+}
