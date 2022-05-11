@@ -10,5 +10,7 @@ This project will ensure that there is no clashes
 Maximum number of lectures of teachers will be taken care of
 Data from database can be downloaded in any given location
 Future work:- Automation and signup can be added
+              Design :- Front end can be made responsive
+                        Application can be made single page
 
 This project was made for PICT college
