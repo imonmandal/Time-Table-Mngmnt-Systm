@@ -19,7 +19,7 @@ class time_table
         if ($this->db->con != null) {
             // fetch each row
             // it returns mysqli_result Object
-            $tableData = $this->db->con->query("SELECT * FROM `{$table}`");
+            $tableData = $this->db->con->query("SELECT * FROM `{$table}`;");
             $resultArray = array();
 
             // fetch data one by one from array
@@ -36,18 +36,14 @@ class time_table
     public function getData($table, $selCol, $selData, $getDataColumn)
     {
         if ($this->db->con != null) {
-            // fetch each row
-            // it returns mysqli_result Object
-            $tableData = $this->db->con->query("SELECT * FROM `{$table}`");
+            $data = $this->db->con->query("SELECT `{$getDataColumn}` FROM `{$table}` WHERE `{$selCol}` = '{$selData}';");
 
-            // fetch data one by one from array
-            while ($item = mysqli_fetch_array($tableData, MYSQLI_ASSOC)) {
-                if ($item[$selCol] == $selData) {
-                    return $item[$getDataColumn];
-                }
+            // fetch data of first row from object $data
+            if ($item = mysqli_fetch_array($data, MYSQLI_ASSOC)) {
+                return $item[$getDataColumn];
+            } else {
+                return null;
             }
-
-            return null;
         }
     }
 
@@ -116,12 +112,12 @@ class time_table
 
     public function helperCT($table, $sizOfCell, $n)
     {
-        $query_string = "CREATE TABLE `{$table}` (Lecture_No varchar(5), Monday varchar($sizOfCell), Tuesday varchar($sizOfCell), Wednesday varchar($sizOfCell), Thursday varchar($sizOfCell), Friday varchar($sizOfCell), Saturday varchar($sizOfCell));";
+        $query_string = "CREATE TABLE `{$table}` (`Lecture_No` varchar(5) PRIMARY KEY, `Monday` varchar($sizOfCell), `Tuesday` varchar($sizOfCell), `Wednesday` varchar($sizOfCell), `Thursday` varchar($sizOfCell), `Friday` varchar($sizOfCell), `Saturday` varchar($sizOfCell));";
         $this->db->con->query($query_string);
 
         $n = (int)$n;
         for ($i = 1; $i <= $n; $i++) {
-            $query_string = "insert into `{$table}` (Lecture_No) values ('{$i}');";
+            $query_string = "INSERT INTO `{$table}` (`Lecture_No`) VALUES ('{$i}');";
             $this->db->con->query($query_string);
         }
     }
