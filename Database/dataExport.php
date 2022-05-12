@@ -25,7 +25,7 @@ class dataExport
         for ($i = 0; $i < count($tableArray); $i++) {
             for ($j = 0; $j < count($tableArray[$i]); $j++) {
                 $d = $tableArray[$i][$tableTitle[$j]];
-                $row = $i + 2; // becoz if table headings
+                $row = $i + 2; // becoz of table headings
                 $col = Coordinate::stringFromColumnIndex($j + 1);
                 if (strlen($d) == 0) {
                     $sheet->setCellValue($col . $row, "-");
