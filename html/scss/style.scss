@@ -121,7 +121,8 @@ body {
   background-color: rgb(181, 245, 240);
 
   header {
-    width: 1265px;
+    width: 100vw;
+    min-width: 1000px;
     height: 2.5rem;
     text-align: center;
     font-size: 2rem;

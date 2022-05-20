@@ -162,7 +162,8 @@ body {
 }
 
 body header {
-  width: 1265px;
+  width: 100vw;
+  min-width: 1000px;
   height: 2.5rem;
   text-align: center;
   font-size: 2rem;
