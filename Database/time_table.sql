@@ -1,23 +1,23 @@
 -- DON'T USE INTEGERS EXCEPT FOR NOS OF LEC....
 
-create database `time_table`;
-drop database `time_table`;
-use time_table;
+CREATE DATABASE `time_table`;
+-- DROP DATABASE `time_table`;
+USE `time_table`;
 
 CREATE TABLE `class` (
-    ClassName varchar(255)
+    ClassName VARCHAR(255)
 );
 
 CREATE TABLE `teacher` (
-    TeacherName varchar(255)
+    TeacherName VARCHAR(255)
 );
 
 CREATE TABLE `room` (
-    RoomNo varchar(255)
+    RoomNo VARCHAR(255)
 );
 
 CREATE TABLE `subject` (
-    SubjectName varchar(255)
+    SubjectName VARCHAR(255)
 );
 
 INSERT INTO `class` VALUES
@@ -40,24 +40,25 @@ INSERT INTO `subject` VALUES
 ('subject2');
 
 CREATE TABLE `teacher3` (
-    Lecture_No varchar(5),
-    Monday varchar(255),
-    Tuesday varchar(255),
-    Wednesday varchar(255),
-    Thursday varchar(255),
-    Friday varchar(255),
-    Saturday varchar(255)
+    Lecture_No VARCHAR(5),
+    Monday VARCHAR(255),
+    Tuesday VARCHAR(255),
+    Wednesday VARCHAR(255),
+    Thursday VARCHAR(255),
+    Friday VARCHAR(255),
+    Saturday VARCHAR(255)
 );
 
-insert into `teacher3` (Lecture_No) values ('1'),('2'),('3'),('4');
+INSERT INTO `teacher3` (Lecture_No) VALUES ('1'),('2'),('3'),('4');
 
-create table `week`(days varchar(25));
-insert into `week` values ('Monday'), ('Tuesday'), ('Wednesday'), ('Thursday'), ('Friday'), ('Saturday');
+CREATE TABLE `week` (
+    days VARCHAR(25)
+);
+INSERT INTO `week` VALUES ('Monday'), ('Tuesday'), ('Wednesday'), ('Thursday'), ('Friday'), ('Saturday');
 
-create table `lec`(sr_no int, lec int);
-insert into `lec` values(1, 4);
+CREATE TABLE `lec` (
+    sr_no INT,
+    lec INT
+);
 
-truncate table `lec`;
-drop table `subject`;
-
-select * from `table`;
+INSERT INTO `lec` VALUES(1, 4);
