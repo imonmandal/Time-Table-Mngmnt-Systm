@@ -191,7 +191,7 @@
                       <input type="hidden" name='room' value='<?php echo $roomNo; ?>'>
                       <input type="hidden" name='lec' value='<?php echo $i; ?>'>
                       <input type="hidden" name='day' value='<?php echo $row['days']; ?>'>
-                      <button type="submit" name="delete-data" class="btn">Delete</button>
+                      <button type="submit" name="delete-data" value="submit" class="btn">Delete</button>
                     </form>
                   </div>
                   <?php
@@ -217,7 +217,7 @@
                       <input type="hidden" name='class' value='<?php echo $class; ?>'>
                       <input type="hidden" name='lec' value='<?php echo $i; ?>'>
                       <input type="hidden" name='day' value='<?php echo $row['days']; ?>'>
-                      <button type="submit" name="lab" class="btn">Lab</button>
+                      <button type="submit" name="lab" value="submit" class="btn">Lab</button>
                     </form>
                   </div>
                 <?php
@@ -299,8 +299,8 @@
                     <input type="hidden" name='day' value='<?php echo $row['days']; ?>' form="form2-<?php echo $row['days'] . "-" . $i; ?>">
                   </div>
                   <div class="form-ele">
-                    <button type="submit" name="lab" class="btn" form="form2-<?php echo $row['days'] . "-" . $i; ?>">Lab</button>
-                    <button type="submit" name="enter-data" class="btn" form="form1-<?php echo $row['days'] . "-" . $i; ?>">Submit</button>
+                    <button type="submit" name="lab" value="submit" class="btn" form="form2-<?php echo $row['days'] . "-" . $i; ?>">Lab</button>
+                    <button type="submit" name="enter-data" class="btn" value="submit" form="form1-<?php echo $row['days'] . "-" . $i; ?>">Submit</button>
                   </div>
                 </div>
               <?php

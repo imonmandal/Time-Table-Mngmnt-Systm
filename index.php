@@ -137,8 +137,8 @@
           <input form="form1" required type="text" placeholder="Enter Number of Lectures" name="l" id="l" />
         </div>
         <div class="fm-ele1">
-          <button form="form1" type="submit" name="enter"><span>Enter Data</span></button>
-          <button form="form2" type="submit" name="clear" Onclick="return ConfirmDelete();" value="1"><span>Clear Database</span></button>
+          <button form="form1" type="submit" name="enter" value="submit"><span>Enter Data</span></button>
+          <button form="form2" type="submit" name="clear" value="submit" Onclick="return ConfirmDelete();" value="1"><span>Clear Database</span></button>
         </div>
       </div>
     </div>
@@ -159,7 +159,7 @@
                 ?>
             </datalist>
           </label>
-          <button type="submit" name="class">Submit</button>
+          <button type="submit" name="class" value="submit">Submit</button>
         </form>
       </div>
       <div class="fm-ele2">
@@ -176,7 +176,7 @@
                 ?>
             </datalist>
           </label>
-          <button type="submit" name="teacher">Submit</button>
+          <button type="submit" name="teacher" value="submit">Submit</button>
         </form>
       </div>
       <div class="fm-ele2">
@@ -193,7 +193,7 @@
                 ?>
             </datalist>
           </label>
-          <button type="submit" name="room">Submit</button>
+          <button type="submit" name="room" value="submit">Submit</button>
         </form>
       </div>
     </div>
@@ -205,7 +205,7 @@
         Enter Download Path
         <input type="text" name="path" required>
       </label>
-      <button type="submit" name="download">Download</button>
+      <button type="submit" name="download" value="submit">Download</button>
     </form>
   </div>
 </body>

@@ -17,7 +17,7 @@ class dataImport
     }
 
     public function impData($file, $table, $column, $cols) // col->array of col name of table in db
-    {       // cols->number of cols to take from xlsheet
+    {   // cols->number of cols to take from xlsheet
         $arr_file = explode('.', $file['name']);
         $extension = end($arr_file);
         $reader = null;
@@ -42,6 +42,8 @@ class dataImport
                     $d = $sheetData[$row][$col];
                     $d = str_replace("'", "", $d); // replace quotes
                     $d = str_replace('"', '', $d);
+                    $d = str_replace("#", "/=/", $d); // replace # by /=/
+                    $d = str_replace("^", "/\\", $d); // replace ^ by /\
                     if (strlen($d) == 0) {
                         $data = $data . "NULL" . ", ";
                     } else {
@@ -52,12 +54,14 @@ class dataImport
                 $d2 = $sheetData[$row][$cols - 1];
                 $d2 = str_replace("'", "", $d2); // replace quotes
                 $d2 = str_replace('"', '', $d2);
+                $d2 = str_replace("#", "/=/", $d2); // replace # by /=/
+                $d2 = str_replace("^", "/\\", $d2); // replace ^ by /\
                 if (strlen($d2) == 0) {
                     $data = $data . "NULL";
                 } else {
                     $data = $data . "'" . $d2 . "'";
                 }
-                $columns = implode('`,`', array_values($column));
+                $columns = implode('`, `', array_values($column));
                 $columns = "`" . $columns . "`";
 
                 $query_string = "INSERT INTO `{$table}` ({$columns}) VALUES ({$data});";

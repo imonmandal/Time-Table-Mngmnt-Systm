@@ -231,7 +231,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <input type="hidden" name='lec' value='<?php echo $lec; ?>'>
                     <input type="hidden" name='day' value='<?php echo $day; ?>'>
                     <input type="hidden" name='index' value='<?php echo $i; ?>'>
-                    <button type="submit" name="delete-data" class="btn2">Delete</button>
+                    <button type="submit" name="delete-data" value="submit" class="btn2">Delete</button>
                   </form>
                 </div>
               </div>
@@ -300,7 +300,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <input type="hidden" name='class' value='<?php echo $class; ?>'>
                     <input type="hidden" name='lec' value='<?php echo $lec; ?>'>
                     <input type="hidden" name='day' value='<?php echo $day; ?>'>
-                    <button type="submit" class="btn2" name="enter-data">Submit</button>
+                    <button type="submit" class="btn2" name="enter-data" value="submit">Submit</button>
                   </div>
                 </form>
               </div>
@@ -314,7 +314,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       <div class="submit">
         <form action="class.php" method="get">
           <input type="hidden" name="class-data" value="<?php echo $class; ?>">
-          <button class="btn1" name="class">Back</button>
+          <button class="btn1" name="class" value="submit">Back</button>
         </form>
       </div>
     </div>
