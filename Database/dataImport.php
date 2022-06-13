@@ -43,8 +43,8 @@ class dataImport
                     $d = str_replace("`", "", $d); // replace backtick
                     $d = str_replace("'", "", $d); // replace quotes
                     $d = str_replace('"', '', $d);
-                    $d = str_replace("#", "/=/", $d); // replace # by /=/
-                    $d = str_replace("^", "/\\", $d); // replace ^ by /\
+                    $d = str_replace("#", "", $d); // replace #
+                    $d = str_replace("^", "", $d); // replace ^
                     if (strlen($d) == 0) {
                         $data = $data . "NULL" . ", ";
                     } else {
@@ -56,8 +56,8 @@ class dataImport
                 $d2 = str_replace("`", "", $d2); // replace backtick
                 $d2 = str_replace("'", "", $d2); // replace quotes
                 $d2 = str_replace('"', '', $d2);
-                $d2 = str_replace("#", "/=/", $d2); // replace # by /=/
-                $d2 = str_replace("^", "/\\", $d2); // replace ^ by /\
+                $d2 = str_replace("#", "", $d2); // replace #
+                $d2 = str_replace("^", "", $d2); // replace ^
                 if (strlen($d2) == 0) {
                     $data = $data . "NULL";
                 } else {
