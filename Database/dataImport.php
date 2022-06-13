@@ -40,6 +40,7 @@ class dataImport
                 // for ($col = 0; $col < count($sheetData[$row]) - 1; $col++) {
                 for ($col = 0; $col < $cols - 1; $col++) {
                     $d = $sheetData[$row][$col];
+                    $d = str_replace("`", "", $d); // replace backtick
                     $d = str_replace("'", "", $d); // replace quotes
                     $d = str_replace('"', '', $d);
                     $d = str_replace("#", "/=/", $d); // replace # by /=/
@@ -52,6 +53,7 @@ class dataImport
                 }
                 // $d2 = $sheetData[$row][count($sheetData[$row]) - 1];
                 $d2 = $sheetData[$row][$cols - 1];
+                $d2 = str_replace("`", "", $d2); // replace backtick
                 $d2 = str_replace("'", "", $d2); // replace quotes
                 $d2 = str_replace('"', '', $d2);
                 $d2 = str_replace("#", "/=/", $d2); // replace # by /=/
